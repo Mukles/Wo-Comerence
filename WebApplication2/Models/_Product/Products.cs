@@ -19,7 +19,7 @@ namespace WebApplication2.Models._Product
             photos = new List<ProductImages>();
         }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         [Column("Name")]
         public string ProductName { get; set; }
@@ -30,9 +30,8 @@ namespace WebApplication2.Models._Product
         [Column("Images")]
         public List<ProductImages> photos { get; set; }
 
-        [Column("Ratings")]
-        public List<Rating> Rating { get; set; }
-
+        [Column("Product_Image")]
+        public string ProductImage { get; set; }
         [Column("Discount")]
         public float Discount { get; set; }
 

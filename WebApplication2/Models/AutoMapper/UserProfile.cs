@@ -17,7 +17,11 @@ namespace Wocomerce.Models.AutoMapper
             CreateMap<LogInModel, Login>();
             CreateMap<AddProduct, Products>()
             .ForMember(des => des.photos, act => act.Ignore())
+            .ForMember(des =>des.ProductImage, act => act.Ignore())
             .ReverseMap();
         }
     }
 }
+
+
+// new Comment

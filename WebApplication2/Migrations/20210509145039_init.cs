@@ -67,9 +67,11 @@ namespace WebApplication2.Migrations
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Price = table.Column<float>(type: "real", nullable: false),
+                    Product_Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Discount = table.Column<float>(type: "real", nullable: false),
                     Discription = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -212,7 +214,7 @@ namespace WebApplication2.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Total = table.Column<float>(type: "real", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ProductsId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ProductsId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -238,7 +240,7 @@ namespace WebApplication2.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ProductsId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ProductsId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -264,33 +266,13 @@ namespace WebApplication2.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     FileName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductsId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    ProductsId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductImages", x => x.Id);
                     table.ForeignKey(
                         name: "FK_ProductImages_Products_ProductsId",
-                        column: x => x.ProductsId,
-                        principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Rating",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ratings = table.Column<int>(type: "int", nullable: false),
-                    ProductsId = table.Column<string>(type: "nvarchar(450)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Rating", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Rating_Products_ProductsId",
                         column: x => x.ProductsId,
                         principalTable: "Products",
                         principalColumn: "Id",
@@ -362,11 +344,6 @@ namespace WebApplication2.Migrations
                 column: "ProductsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Rating_ProductsId",
-                table: "Rating",
-                column: "ProductsId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_SubCatagory_CatagoryId",
                 table: "SubCatagory",
                 column: "CatagoryId");
@@ -397,9 +374,6 @@ namespace WebApplication2.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductImages");
-
-            migrationBuilder.DropTable(
-                name: "Rating");
 
             migrationBuilder.DropTable(
                 name: "SubCatagory");

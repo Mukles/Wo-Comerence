@@ -10,7 +10,7 @@ using Wocomerce.Models;
 namespace WebApplication2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210508054035_init")]
+    [Migration("20210509145039_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,8 +162,8 @@ namespace WebApplication2.Migrations
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ProductsId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ProductsId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -182,8 +182,8 @@ namespace WebApplication2.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProductsId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ProductsId")
+                        .HasColumnType("int");
 
                     b.Property<float>("Total")
                         .HasColumnType("real");
@@ -244,8 +244,8 @@ namespace WebApplication2.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("ProductsId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("ProductsId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -258,8 +258,10 @@ namespace WebApplication2.Migrations
 
             modelBuilder.Entity("WebApplication2.Models._Product.Products", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<float>("Discount")
                         .HasColumnType("real")
@@ -272,6 +274,10 @@ namespace WebApplication2.Migrations
                         .HasColumnType("real")
                         .HasColumnName("Price");
 
+                    b.Property<string>("ProductImage")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Product_Image");
+
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Name");
@@ -279,26 +285,6 @@ namespace WebApplication2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("WebApplication2.Models._Ratings.Rating", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("ProductsId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Ratings")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductsId");
-
-                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("WebApplication2.Models._User.ApplicationUser", b =>
@@ -468,13 +454,6 @@ namespace WebApplication2.Migrations
                         .HasForeignKey("ProductsId");
                 });
 
-            modelBuilder.Entity("WebApplication2.Models._Ratings.Rating", b =>
-                {
-                    b.HasOne("WebApplication2.Models._Product.Products", null)
-                        .WithMany("Rating")
-                        .HasForeignKey("ProductsId");
-                });
-
             modelBuilder.Entity("WebApplication2.Models._Catagory.Catagory", b =>
                 {
                     b.Navigation("SubCatagories");
@@ -487,8 +466,6 @@ namespace WebApplication2.Migrations
                     b.Navigation("Orders");
 
                     b.Navigation("photos");
-
-                    b.Navigation("Rating");
                 });
 
             modelBuilder.Entity("WebApplication2.Models._User.ApplicationUser", b =>

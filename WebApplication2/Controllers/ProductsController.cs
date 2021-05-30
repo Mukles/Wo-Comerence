@@ -40,18 +40,17 @@ namespace Wocomerce.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok();
+            return Ok("sjflksdjf");
         }
 
         
         [Route("Add")]
         [HttpPost]
-        public IActionResult Add([FromForm]AddProduct Entity) 
+        public IActionResult Add([FromForm] AddProduct Entity) 
         {
             var Product = mapper.Map<Products>(Entity);
-            var listImages = new List<ProductImages>();
-            Product.ProductName = imgProcesing.ImageProcesing(Entity.ProductImage);
-            Entity.Photos.ForEach(image => listImages.Add(new ProductImages { FileName = imgProcesing.ImageProcesing(image)}));
+            Product.ProductImage = imgProcesing.ImageProcesing(Entity.ProductImage);
+            Entity.Photos.ForEach(image => Product.photos.Add(new ProductImages { FileName = imgProcesing.ImageProcesing(image)}));
             productRepository.Add(Product);
             productRepository.Complete();
             return Ok();
