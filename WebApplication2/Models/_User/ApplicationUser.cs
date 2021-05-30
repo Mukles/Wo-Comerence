@@ -23,6 +23,10 @@ namespace WebApplication2.Models._User
         [Column("Post_Code")]
         public int PostCode { get; set; }
 
+        public string FristName { get; set; }
+
+        public string LastName { get; set; }
+
         public Gender? Gender { get; set; }
         
         [Column("Date_Of_Brith")]

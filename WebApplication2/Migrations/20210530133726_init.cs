@@ -28,6 +28,8 @@ namespace WebApplication2.Migrations
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     City_Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Post_Code = table.Column<int>(type: "int", nullable: false),
+                    FristName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gender = table.Column<int>(type: "int", nullable: true),
                     Date_Of_Brith = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
