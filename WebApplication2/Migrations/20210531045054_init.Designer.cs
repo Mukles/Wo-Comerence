@@ -10,7 +10,7 @@ using Wocomerce.Models;
 namespace WebApplication2.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210530133726_init")]
+    [Migration("20210531045054_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
