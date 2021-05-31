@@ -87,10 +87,10 @@ namespace Wocomerce.Controllers
                 ApplicationUser user = new ApplicationUser { Email = model.Email };
                 await signInManager.PasswordSignInAsync(user, model.Password, true, false);
                 var jwtToken = GenerateJwtToken(user);
-                return Ok(new AuthResult { Success = false, Token = jwtToken });
+                return Ok(new AuthResult { Success = true, Token = jwtToken });
             }
 
-            return BadRequest("Invalid Login attempt");
+            return BadRequest(new AuthResult { Success = true, Erros = "Invalid Login attempt" });
         }
 
         private string GenerateJwtToken(ApplicationUser user)

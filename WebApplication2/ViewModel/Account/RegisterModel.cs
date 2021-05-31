@@ -21,7 +21,7 @@ namespace WebApplication2.ViewModel.Account
         public string Email { get; set; }
 
         [Required]
-        public Gender Gender { get; set; }
+        public string Gender { get; set; }
 
         [Required]
         public string Password { get; set; }

@@ -27,7 +27,7 @@ namespace WebApplication2.Models._User
 
         public string LastName { get; set; }
 
-        public Gender? Gender { get; set; }
+        public string Gender { get; set; }
         
         [Column("Date_Of_Brith")]
         public DateTime DateOfBrith { get; set; }
