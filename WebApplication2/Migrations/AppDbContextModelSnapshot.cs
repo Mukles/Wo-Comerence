@@ -180,17 +180,12 @@ namespace WebApplication2.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("ProductsId")
-                        .HasColumnType("int");
-
                     b.Property<float>("Total")
                         .HasColumnType("real");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ProductsId");
 
                     b.ToTable("Carts");
                 });
@@ -242,14 +237,9 @@ namespace WebApplication2.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("ProductsId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApplicationUserId");
-
-                    b.HasIndex("ProductsId");
 
                     b.ToTable("Orders");
                 });
@@ -261,12 +251,18 @@ namespace WebApplication2.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("CartsId")
+                        .HasColumnType("int");
+
                     b.Property<float>("Discount")
                         .HasColumnType("real")
                         .HasColumnName("Discount");
 
                     b.Property<string>("Discription")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OrdersId")
+                        .HasColumnType("int");
 
                     b.Property<float>("Price")
                         .HasColumnType("real")
@@ -281,6 +277,10 @@ namespace WebApplication2.Migrations
                         .HasColumnName("Name");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartsId");
+
+                    b.HasIndex("OrdersId");
 
                     b.ToTable("Products");
                 });
@@ -434,10 +434,6 @@ namespace WebApplication2.Migrations
                     b.HasOne("WebApplication2.Models._User.ApplicationUser", null)
                         .WithMany("Carts")
                         .HasForeignKey("ApplicationUserId");
-
-                    b.HasOne("WebApplication2.Models._Product.Products", null)
-                        .WithMany("Carts")
-                        .HasForeignKey("ProductsId");
                 });
 
             modelBuilder.Entity("WebApplication2.Models._Catagory.Sub_Catagory.SubCatagory", b =>
@@ -452,10 +448,26 @@ namespace WebApplication2.Migrations
                     b.HasOne("WebApplication2.Models._User.ApplicationUser", null)
                         .WithMany("Orders")
                         .HasForeignKey("ApplicationUserId");
+                });
 
-                    b.HasOne("WebApplication2.Models._Product.Products", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("ProductsId");
+            modelBuilder.Entity("WebApplication2.Models._Product.Products", b =>
+                {
+                    b.HasOne("WebApplication2.Models._Cart.Carts", "Carts")
+                        .WithMany("Products")
+                        .HasForeignKey("CartsId");
+
+                    b.HasOne("WebApplication2.Models._Order.Order", "Orders")
+                        .WithMany("Products")
+                        .HasForeignKey("OrdersId");
+
+                    b.Navigation("Carts");
+
+                    b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("WebApplication2.Models._Cart.Carts", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("WebApplication2.Models._Catagory.Catagory", b =>
@@ -463,12 +475,13 @@ namespace WebApplication2.Migrations
                     b.Navigation("SubCatagories");
                 });
 
+            modelBuilder.Entity("WebApplication2.Models._Order.Order", b =>
+                {
+                    b.Navigation("Products");
+                });
+
             modelBuilder.Entity("WebApplication2.Models._Product.Products", b =>
                 {
-                    b.Navigation("Carts");
-
-                    b.Navigation("Orders");
-
                     b.Navigation("photos");
                 });
 

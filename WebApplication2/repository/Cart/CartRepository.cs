@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication2.Models._Cart;
+using WebApplication2.Models._Product;
 using Wocomerce.Models;
 
 namespace WebApplication2.repository.Cart
@@ -14,6 +15,10 @@ namespace WebApplication2.repository.Cart
         public CartRepository(AppDbContext context): base(context)
         {
             this.context = context;
+        }
+        public Products FindProduct(int Id)
+        {
+            return context.Products.Find(Id);
         }
     }
 }

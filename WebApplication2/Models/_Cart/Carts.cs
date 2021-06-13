@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication2.Models._Product;
 
 namespace WebApplication2.Models._Cart
 {
@@ -9,5 +10,6 @@ namespace WebApplication2.Models._Cart
     {
         public int Id { get; set; }
         public float Total { get; set; }
+        public List<Products> Products { get; set; }
     }
 }

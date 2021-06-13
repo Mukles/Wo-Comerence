@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication2.Models._User;
 using Wocomerce.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -15,19 +16,22 @@ namespace Wocomerce.Controllers
     public class AdministatorController : ControllerBase
     {
         private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public AdministatorController(RoleManager<IdentityRole> roleManager)
+        public AdministatorController(RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             this.roleManager = roleManager;
+            this.userManager = userManager;
         }
 
-        // POST: api/<AdministatorController>/AddAdmin
-       /* [HttpPost]
-        public async void AddAdmin([FromBody] AddClasimsViewModel model)
+       
+        public async void AddRole(string Email)
         {
-            IdentityRole role = new IdentityRole { Name = model.RollName };
-            IdentityResult result = await roleManager.CreateAsync(role);
-        }*/
-
+            var user = await userManager.FindByEmailAsync(Email);
+            if ((await userManager.IsInRoleAsync(user, "admin")))
+            {
+                await userManager.AddClaimAsync(user, new);
+            }
+        }
     }
 }

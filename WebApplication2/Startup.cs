@@ -36,17 +36,16 @@ namespace WebApplication2
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<JwtConfig>(Configuration.GetSection("JwtConfig"));
-            services.AddControllers();
-            services.AddDbContextPool<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBCS")));
-            services.AddAuthentication(option =>
-            {
-                option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-                option.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DBCS")));
+
+            services.AddAuthentication(options => {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-            .AddJwtBearer(jwt =>
-            {
+            .AddJwtBearer(jwt => {
                 var key = Encoding.ASCII.GetBytes(Configuration["JwtConfig:Secret"]);
+
                 jwt.SaveToken = true;
                 jwt.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -58,17 +57,12 @@ namespace WebApplication2
                     RequireExpirationTime = false
                 };
             });
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
+                        .AddEntityFrameworkStores<AppDbContext>();
+
             services.AddCors();
-
-            //For Identity
-            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
-                options.SignIn.RequireConfirmedAccount = true;
-            })
-            .AddEntityFrameworkStores<AppDbContext>()
-            .AddDefaultTokenProviders();
-
-            //Adding Authentication
-            services.AddAuthentication(option => option.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme);
+            services.AddControllers();
             services.AddAutoMapper(typeof(UserProfile).Assembly);
             services.AddSwaggerGen(c =>
             {

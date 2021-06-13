@@ -12,11 +12,6 @@ namespace WebApplication2.Models._User
 {
     public class ApplicationUser:IdentityUser
     {
-        public ApplicationUser()
-        {
-            Orders = new List<Order>();
-            Carts = new List<Carts>();
-        }
         [Column("City_Name")]
         public string CityName { get; set; }
 
@@ -32,10 +27,8 @@ namespace WebApplication2.Models._User
         [Column("Date_Of_Brith")]
         public DateTime DateOfBrith { get; set; }
 
-        [Column("Order")]
-        public List<Order> Orders { get; set; }
+        public Order Orders { get; set; }
 
-        [Column("Cart")]
-        public List<Carts> Carts { get; set; }
+        public Carts Cart { get; set; }
     }
 }

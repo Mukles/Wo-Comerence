@@ -14,8 +14,6 @@ namespace WebApplication2.Models._Product
     {
         public Products()
         {
-            Carts = new List<Carts>();
-            Orders = new List<Order>();
             photos = new List<ProductImages>();
         }
 
@@ -35,11 +33,12 @@ namespace WebApplication2.Models._Product
         [Column("Discount")]
         public float Discount { get; set; }
 
-        [Column("Cart")]
-        public List<Carts> Carts { get; set; }
+        public int CartId { get; set; }
+        public Carts Carts { get; set; }
 
-        [Column("Order")]
-        public List<Order> Orders { get; set; }
+        public int OrderId { get; set; }
+
+        public Order Order { get; set; }
 
         public string Discription { get; set; }
     }

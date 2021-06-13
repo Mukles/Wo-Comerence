@@ -40,7 +40,7 @@ namespace Wocomerce.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok("sjflksdjf");
+            return Ok(context.Products);
         }
 
         

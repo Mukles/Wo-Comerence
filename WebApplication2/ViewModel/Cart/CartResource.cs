@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication2.ViewModel.Cart
 {
-    public class CartModel
+    public class CartResource
     {
     }
 }

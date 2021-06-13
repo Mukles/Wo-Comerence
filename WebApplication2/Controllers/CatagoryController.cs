@@ -28,6 +28,7 @@ namespace WebApplication2.Controllers
             this.context = context;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Get()
         {
